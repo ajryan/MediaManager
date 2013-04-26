@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaManager.Web", "MediaManager.Web\MediaManager.Web.csproj", "{06006D5D-5012-4CBA-80C0-470051E57F7A}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediaManager.Database", "MediaManager.Database\MediaManager.Database.sqlproj", "{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06006D5D-5012-4CBA-80C0-470051E57F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06006D5D-5012-4CBA-80C0-470051E57F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06006D5D-5012-4CBA-80C0-470051E57F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06006D5D-5012-4CBA-80C0-470051E57F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BBD7B1E-25D1-470F-BAD3-DCF01A57C80F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
