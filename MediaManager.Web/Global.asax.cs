@@ -10,7 +10,7 @@ namespace MediaManager.Web
         {
             BundleTable.Bundles.Add(
                 new ScriptBundle("~/bundles/libs").Include(
-                    "~/Scripts/azuremobileservices-{version}.js",
+                    "~/Scripts/azuremobileservices.js",
                     "~/Scripts/jquery-{version}.js",
                     "~/Scripts/angular.js"));
         }
