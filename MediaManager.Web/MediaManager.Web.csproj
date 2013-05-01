@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <None Include="default.cshtml" />
+    <Content Include="default.cshtml" />
     <TypeScriptCompile Include="Scripts\app.ts" />
     <Content Include="Scripts\angular-bootstrap-prettify.js" />
     <Content Include="Scripts\angular-bootstrap-prettify.min.js" />
