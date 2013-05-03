@@ -4,49 +4,17 @@
 <head>
     <title>MediaManager</title>
 </head>
-<body>
-    <div>
-        <h2>Hello, World.</h2>
-        <p id="summary">Loading...</p>
+<body data-ng-app="MediaManagerApp">
+    <div class="navbar">
+        <ul class="navmenu" data-ng-controller="NavCtrl">
+            <li data-ng-class="{'active':getClass('/login')}"><a href="#/login">Login</a></li>
+            <li data-ng-class="{'active':getClass('/settings')}"><a href="#/settings">Settings</a></li>
+        </ul>
     </div>
-    <div id="logged-in" style="display: none">
-        You are logged in as <span id="login-name"></span>.
-        <button id="log-out">Log out</button>
-    </div>
-    <div id="logged-out" style="display: none">
-        You are not logged in.
-        <button>Log in</button>
-    </div>
-
+    
+    <div class="main-content" data-ng-view=""></div>
+    
     @Scripts.Render("~/bundles/libs")
-    <script src="/Scripts/app.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            var app = new MediaManager.App("https://mediamanager.azure-mobile.net/", "zXiNSblOtaOabAuuuuBrFgsqAugjWP23");
-
-            function refreshAuthDisplay() {
-                var isLoggedIn = app.isLoggedIn();
-                $("#logged-in").toggle(isLoggedIn);
-                $("#logged-out").toggle(!isLoggedIn);
-                if (isLoggedIn) {
-                    $("#login-name").text(app.currentUser().userId);
-                    console && console.log(app.currentUser());
-                }
-            }
-            
-            refreshAuthDisplay();
-            $('#summary').html('<strong>You must login to access data.</strong>');
-            $("#logged-out button").click(function() {
-                app.logIn().then(
-                    refreshAuthDisplay,
-                    function (error) { alert(error); });
-            });
-            $("#logged-in button").click(function() {
-                app.logOut();
-                refreshAuthDisplay();
-                $('#summary').html('<strong>You must login to access data.</strong>');
-            });
-        });
-    </script>
+    @Scripts.Render("~/bundles/angular-app")
 </body>
 </html>

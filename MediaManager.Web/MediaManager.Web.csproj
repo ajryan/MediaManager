@@ -92,9 +92,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\controllers\login.js">
+      <DependentUpon>login.ts</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\login.min.js">
+      <DependentUpon>login.ts</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\login.ts" />
+    <Content Include="app\controllers\navigation.js">
+      <DependentUpon>navigation.ts</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\navigation.min.js">
+      <DependentUpon>navigation.ts</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\navigation.ts" />
+    <Content Include="app\controllers\settings.js">
+      <DependentUpon>settings.ts</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\settings.min.js">
+      <DependentUpon>settings.ts</DependentUpon>
+    </Content>
+    <Content Include="app\controllers\settings.ts" />
+    <Content Include="app\partials\login.html" />
+    <Content Include="app\partials\settings.html" />
+    <TypeScriptCompile Include="app\services\azureMobile.ts" />
+    <Content Include="app\services\azureMobile.js">
+      <DependentUpon>azureMobile.ts</DependentUpon>
+    </Content>
+    <Content Include="app\services\azureMobile.min.js">
+      <DependentUpon>azureMobile.ts</DependentUpon>
+    </Content>
+    <Content Include="app\_refs.ts" />
     <Content Include="Global.asax" />
     <Content Include="default.cshtml" />
-    <TypeScriptCompile Include="Scripts\app.ts" />
+    <TypeScriptCompile Include="app\app.ts" />
     <Content Include="Scripts\angular-bootstrap-prettify.js" />
     <Content Include="Scripts\angular-bootstrap-prettify.min.js" />
     <Content Include="Scripts\angular-bootstrap.js" />
@@ -111,10 +142,10 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\app.js">
+    <Content Include="app\app.js">
       <DependentUpon>app.ts</DependentUpon>
     </Content>
-    <Content Include="Scripts\app.min.js">
+    <Content Include="app\app.min.js">
       <DependentUpon>app.ts</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\mediamanager - FTP.pubxml" />
@@ -437,6 +468,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
