@@ -5,14 +5,14 @@ var MediaManager;
     MediaManager.App.config([
         '$routeProvider', 
         function ($routeProvider) {
-            $routeProvider.when('/login', {
-                controller: MediaManager.LoginCtrlDef,
-                templateUrl: '/app/partials/login.html'
+            $routeProvider.when('/home', {
+                controller: MediaManager.HomeCtrl,
+                templateUrl: '/app/partials/home.html'
             }).when('/settings', {
-                controller: MediaManager.SettingsCtrlDef,
+                controller: MediaManager.SettingsCtrl,
                 templateUrl: '/app/partials/settings.html'
             }).otherwise({
-                redirectTo: '/login'
+                redirectTo: '/home'
             });
         }    ]);
 })(MediaManager || (MediaManager = {}));

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Optimization;
+using BundleTransformer.Core.Transformers;
 
 namespace MediaManager.Web
 {
@@ -8,18 +9,24 @@ namespace MediaManager.Web
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            BundleTable.Bundles.Add(
-                new ScriptBundle("~/bundles/libs").Include(
-                    "~/Scripts/azuremobileservices.js",
-                    "~/Scripts/jquery-{version}.js",
-                    "~/Scripts/angular.js"));
-            BundleTable.Bundles.Add(
-                new ScriptBundle("~/bundles/angular-app").Include(
-                    "~/app/app.js",
-                    "~/app/controllers/navigation.js",
-                    "~/app/controllers/login.js",
-                    "~/app/controllers/settings.js",
-                    "~/app/services/azureMobile.js"));
+            var jsTransformer = new JsTransformer();
+
+            var libsBundle = new Bundle("~/bundles/libs").Include(
+                "~/Scripts/azuremobileservices.js",
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/angular.js");
+            libsBundle.Transforms.Add(jsTransformer);
+            BundleTable.Bundles.Add(libsBundle);
+            
+            var angularAppBundle = new Bundle("~/bundles/angular-app").Include(
+                "~/app/app.js",
+                "~/app/services/azureMobile.js",
+                "~/app/controllers/navigation.js",
+                "~/app/controllers/home.js",
+                "~/app/controllers/login.js",
+                "~/app/controllers/settings.js");
+            angularAppBundle.Transforms.Add(jsTransformer);
+            BundleTable.Bundles.Add(angularAppBundle);
         }
     }
 }

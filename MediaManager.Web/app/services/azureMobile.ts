@@ -3,20 +3,49 @@
 module MediaManager {
     'use strict';
 
-    App.service('azureMobileService', () => {
-        this._client = new WindowsAzure.MobileServiceClient(
+    export var STORAGE_KEY: string = 'MediaManagerIdentity';
+
+    export class AzureMobileService {
+        static $inject = ['$log'];
+
+        private static _client: Microsoft.WindowsAzure.MobileServiceClient = new WindowsAzure.MobileServiceClient(
             'https://mediamanager.azure-mobile.net/', 'zXiNSblOtaOabAuuuuBrFgsqAugjWP23');
 
-        this.login = () => {
-            return this._client.login("twitter");
+        private _log: ng.ILogService;
+
+        constructor($log) {
+            this._log = $log;
+
+            var storedCredentialJSON = window.localStorage.getItem(STORAGE_KEY);
+            if (storedCredentialJSON !== null) {
+                var storedCredential = JSON.parse(storedCredentialJSON);
+                if (storedCredential.hasOwnProperty('userId') && storedCredential.hasOwnProperty('mobileServiceAuthenticationToken')) {
+                    AzureMobileService._client.currentUser = storedCredential;
+                }
+            }
         }
 
-        this.logout = () => {
-            this._client.logout();
+        login(): Microsoft.WindowsAzure.asyncPromise {
+            return AzureMobileService._client
+                .login('twitter')
+                .then((result: any) => {
+                    var resultJSON = JSON.stringify(result);
+                    window.localStorage.setItem(STORAGE_KEY, resultJSON);
+                });
         }
 
-        this.getIsLoggedIn = () => {
-            return (this._client.currentUser !== null);
+        logout(): void {
+            window.localStorage.removeItem(STORAGE_KEY);
+            AzureMobileService._client.logout();
         }
-    });
+
+        getIsLoggedIn(): bool {
+            return (AzureMobileService._client.currentUser !== null);
+        }
+
+        getUserName(): string {
+            return AzureMobileService._client.currentUser.userId;
+        }
+    }
+    App.service('azureMobileService', AzureMobileService);
 }

@@ -1,21 +1,14 @@
 var MediaManager;
 (function (MediaManager) {
     'use strict';
-    MediaManager.SettingsCtrlDef = [
-        '$scope', 
-        function ($scope) {
-            return new SettingsCtrl($scope);
-        }    ];
     var SettingsCtrl = (function () {
         function SettingsCtrl($scope) {
             this.$scope = $scope;
+            $scope.message = "Settings";
         }
-        SettingsCtrl.prototype.injection = function () {
-            return [
-                '$scope', 
-                SettingsCtrl
-            ];
-        };
+        SettingsCtrl.$inject = [
+            '$scope'
+        ];
         return SettingsCtrl;
     })();
     MediaManager.SettingsCtrl = SettingsCtrl;    

@@ -1,8 +1,8 @@
 ﻿/// <reference path="..\_refs.ts" />
 module MediaManager {
-    MediaManager.App.controller(
-        'NavCtrl', 
-        ['$scope', '$location', function($scope, $location) {
+    export class NavCtrl {
+        static $inject = ['$scope', '$location'];
+        constructor(private $scope: any, private $location: ng.ILocationService) {
             $scope.getClass = function (path) {
                 if ($location.path().substr(0, path.length) == path) {
                     return true
@@ -10,5 +10,7 @@ module MediaManager {
                     return false;
                 }
             }
-        }]);
+        }
+    }
+    MediaManager.App.controller(MediaManager.NavCtrl);
 }

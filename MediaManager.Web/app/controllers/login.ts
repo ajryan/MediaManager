@@ -3,12 +3,10 @@
 module MediaManager {
     'use strict';
 
-    export var LoginCtrlDef: any[] = [
-        '$scope', 'azureMobileService',
-        ($scope, azureMobileService) => { return new LoginCtrl($scope, azureMobileService); }];
-
     export class LoginCtrl {
-        constructor(private $scope: any, private azureMobileService: any) { // TODO: interface ILoginScope, interface IAzureMobileService
+        static $inject = ['$scope', 'azureMobileService'];
+
+        constructor(private $scope: any, private azureMobileService: AzureMobileService) { // TODO: interface ILoginScope
             var self = this;
 
             self.updateLogin($scope, azureMobileService);
@@ -30,8 +28,11 @@ module MediaManager {
 
         private updateLogin($scope, azureMobileService) {
             var loggedIn = azureMobileService.getIsLoggedIn();
-            $scope.statusMessage = loggedIn ? "You are logged in." : "Please log in.";
+            $scope.statusMessage = loggedIn
+                ? "You are logged in as " + azureMobileService.getUserName()
+                : "Please log in.";
             $scope.loggedIn = loggedIn;
         }
     }
+    MediaManager.App.controller(MediaManager.LoginCtrl);
 }

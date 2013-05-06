@@ -3,13 +3,89 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>MediaManager</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body {
+            color: #333;
+            font-family: sans-serif;
+            background-color: #e9e9e9;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            color: #e5e5e5;
+            overflow: hidden;
+        }
+        .nav-menu {
+            float: left;
+            padding: 0.5em;
+            width: 50%;
+        }
+            .nav-menu li {
+                display: inline-block;
+                list-style-type: none;
+            }
+            .nav-menu li a {
+                color: #69f;
+            }
+            .nav-menu li.active a {
+                color: #bbb;
+            }
+
+        .nav-login {
+            padding: 0.5em;
+            text-align: right;
+            float: right;
+            width: 50%;
+        }
+        .nav-bottom {
+            background-color: #e9e9e9;
+            height: 5px;
+            width: 100%;
+            clear: both;
+            -moz-border-radius-topleft: 4px;
+            -webkit-border-top-left-radius: 4px;
+            border-top-left-radius: 4px;
+            -moz-border-radius-topright: 4px;
+            -webkit-border-top-right-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        .main-content {
+            padding: 0.5em;
+            background-color: #e9e9e9;
+        }
+
+        @@media screen and (max-width: 40em) {
+            .nav-menu {
+                float: none;
+                width: 100%;   
+            }
+            .nav-login {
+                float: none;
+                width: 100%;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body data-ng-app="MediaManagerApp">
     <div class="navbar">
-        <ul class="navmenu" data-ng-controller="NavCtrl">
-            <li data-ng-class="{'active':getClass('/login')}"><a href="#/login">Login</a></li>
+        <div class="nav-login" data-ng-controller="MediaManager.LoginCtrl">
+            {{statusMessage}}
+            <button data-ng-hide="loggedIn" data-ng-click="login()">Login</button>
+            <button data-ng-show="loggedIn" data-ng-click="logout()">Logout</button>
+        </div>
+        <ul class="nav-menu" data-ng-controller="MediaManager.NavCtrl">
+            <li data-ng-class="{'active':getClass('/home')}"><a href="#/login">Home</a></li>
             <li data-ng-class="{'active':getClass('/settings')}"><a href="#/settings">Settings</a></li>
         </ul>
+        <div class="nav-bottom"></div>
     </div>
     
     <div class="main-content" data-ng-view=""></div>

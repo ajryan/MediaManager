@@ -1,12 +1,6 @@
 var MediaManager;
 (function (MediaManager) {
     'use strict';
-    MediaManager.LoginCtrlDef = [
-        '$scope', 
-        'azureMobileService', 
-        function ($scope, azureMobileService) {
-            return new LoginCtrl($scope, azureMobileService);
-        }    ];
     var LoginCtrl = (function () {
         function LoginCtrl($scope, azureMobileService) {
             this.$scope = $scope;
@@ -27,12 +21,17 @@ var MediaManager;
                 self.updateLogin($scope, azureMobileService);
             };
         }
+        LoginCtrl.$inject = [
+            '$scope', 
+            'azureMobileService'
+        ];
         LoginCtrl.prototype.updateLogin = function ($scope, azureMobileService) {
             var loggedIn = azureMobileService.getIsLoggedIn();
-            $scope.statusMessage = loggedIn ? "You are logged in." : "Please log in.";
+            $scope.statusMessage = loggedIn ? "You are logged in as " + azureMobileService.getUserName() : "Please log in.";
             $scope.loggedIn = loggedIn;
         };
         return LoginCtrl;
     })();
     MediaManager.LoginCtrl = LoginCtrl;    
+    MediaManager.App.controller(MediaManager.LoginCtrl);
 })(MediaManager || (MediaManager = {}));

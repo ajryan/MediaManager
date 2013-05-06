@@ -3,17 +3,11 @@
 module MediaManager {
     'use strict';
 
-    export var SettingsCtrlDef: any[] = ['$scope', ($scope) => { return new SettingsCtrl($scope); }];
-
     export class SettingsCtrl {
-        public injection(): any[] {
-            return [
-                '$scope',
-                SettingsCtrl
-            ];
-        }
+        static $inject = ['$scope'];
 
         constructor(private $scope: any) { // TODO: interface ISettingsScope
+            $scope.message = "Settings";
         }
     }
 }
