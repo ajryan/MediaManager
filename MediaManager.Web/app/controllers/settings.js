@@ -9,14 +9,14 @@ var MediaManager;
             $scope.message = "Settings";
             $scope.result = "";
             $scope.getSomething = function () {
-                $http.get('http://localhost:81/api/settings', {
+                $http.get(Globals.apiUrl + '/api/settings', {
                     headers: {
                         'Authorization': 'Bearer ' + azureMobileService.getToken()
                     }
-                }).success(function (d, s, h, c) {
-                    $scope.result = JSON.stringify(d);
-                }).error(function (d, s, h, c) {
-                    $scope.result = JSON.stringify(d);
+                }).success(function (data) {
+                    $scope.result = JSON.stringify(data);
+                }).error(function (data, status, h, c) {
+                    $scope.result = status;
                 });
             };
         }

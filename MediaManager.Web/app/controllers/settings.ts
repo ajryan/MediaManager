@@ -1,5 +1,7 @@
 ﻿/// <reference path="../_refs.ts" />
 
+declare var Globals: any;
+
 module MediaManager {
     'use strict';
 
@@ -11,12 +13,12 @@ module MediaManager {
             $scope.result = "";
 
             $scope.getSomething = () => {
-                $http.get('http://localhost:81/api/settings', {
+                $http.get(Globals.apiUrl + '/api/settings', {
                     headers: { 'Authorization': 'Bearer ' + azureMobileService.getToken()}
-                }).success((d,s,h,c) => {
-                    $scope.result = JSON.stringify(d);
-                }).error((d,s,h,c) => {
-                    $scope.result = JSON.stringify(d);
+                }).success((data) => {
+                    $scope.result = JSON.stringify(data);
+                }).error((data,status,h,c) => {
+                    $scope.result = status;
                 });
             }
         }

@@ -38,7 +38,7 @@ var MediaManager;
             return AzureMobileService._client.currentUser.userId;
         };
         AzureMobileService.prototype.getToken = function () {
-            return this._storedCredential.mobileServiceAuthenticationToken;
+            return (this._storedCredential == null) ? null : this._storedCredential.mobileServiceAuthenticationToken;
         };
         return AzureMobileService;
     })();

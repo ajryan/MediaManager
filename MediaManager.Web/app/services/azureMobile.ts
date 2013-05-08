@@ -53,7 +53,7 @@ module MediaManager {
         }
 
         getToken(): string {
-            return this._storedCredential.mobileServiceAuthenticationToken;
+            return (this._storedCredential == null)? null : this._storedCredential.mobileServiceAuthenticationToken;
         }
     }
     App.service('azureMobileService', AzureMobileService);
