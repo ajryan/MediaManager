@@ -22,7 +22,7 @@ var MediaManager;
             var self = this;
             return AzureMobileService._client.login('twitter').then(function (result) {
                 var resultJSON = JSON.stringify(result);
-                self._storedCredential = resultJSON;
+                self._storedCredential = result;
                 window.localStorage.setItem(MediaManager.STORAGE_KEY, resultJSON);
             });
         };

@@ -2,6 +2,7 @@
 using System.Web.Http;
 using System.Web.Http.Cors;
 using MediaManager.ApiWebRole.Auth;
+using Microsoft.WindowsAzure;
 
 namespace MediaManager.ApiWebRole.App_Start
 {
@@ -32,8 +33,7 @@ namespace MediaManager.ApiWebRole.App_Start
             config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             // register JWT authorization validation
-            // TODO: must exclude from src ctrl
-            JsonWebTokenValidationHandler.Register(config, "PIaDiYUWDaLCTJdrtFeLegcsFRmyVb86");
+            JsonWebTokenValidationHandler.Register(config, CloudConfigurationManager.GetSetting("zumoMaster"));
         }
     }
 }

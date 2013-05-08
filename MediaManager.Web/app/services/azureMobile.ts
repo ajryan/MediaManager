@@ -33,7 +33,7 @@ module MediaManager {
                 .login('twitter')
                 .then((result: any) => {
                     var resultJSON = JSON.stringify(result);
-                    self._storedCredential = resultJSON;
+                    self._storedCredential = result;
                     window.localStorage.setItem(STORAGE_KEY, resultJSON);
                 });
         }
