@@ -12,6 +12,7 @@ module MediaManager {
             'https://mediamanager.azure-mobile.net/', 'zXiNSblOtaOabAuuuuBrFgsqAugjWP23');
 
         private _log: ng.ILogService;
+        private _storedCredential: any;
 
         constructor($log) {
             this._log = $log;
@@ -20,21 +21,25 @@ module MediaManager {
             if (storedCredentialJSON !== null) {
                 var storedCredential = JSON.parse(storedCredentialJSON);
                 if (storedCredential.hasOwnProperty('userId') && storedCredential.hasOwnProperty('mobileServiceAuthenticationToken')) {
+                    this._storedCredential = storedCredential;
                     AzureMobileService._client.currentUser = storedCredential;
                 }
             }
         }
 
         login(): Microsoft.WindowsAzure.asyncPromise {
+            var self = this;
             return AzureMobileService._client
                 .login('twitter')
                 .then((result: any) => {
                     var resultJSON = JSON.stringify(result);
+                    self._storedCredential = resultJSON;
                     window.localStorage.setItem(STORAGE_KEY, resultJSON);
                 });
         }
 
         logout(): void {
+            this._storedCredential = null;
             window.localStorage.removeItem(STORAGE_KEY);
             AzureMobileService._client.logout();
         }
@@ -45,6 +50,10 @@ module MediaManager {
 
         getUserName(): string {
             return AzureMobileService._client.currentUser.userId;
+        }
+
+        getToken(): string {
+            return this._storedCredential.mobileServiceAuthenticationToken;
         }
     }
     App.service('azureMobileService', AzureMobileService);
