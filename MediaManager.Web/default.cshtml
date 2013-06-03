@@ -78,7 +78,7 @@
 <body data-ng-app="MediaManagerApp">
     <div class="navbar">
         <div class="nav-login" data-ng-controller="MediaManager.LoginCtrl">
-            {{statusMessage}}
+            <span data-ng-bind="statusMessage" ></span>
             <button data-ng-hide="loggedIn" data-ng-click="login()">Login</button>
             <button data-ng-show="loggedIn" data-ng-click="logout()">Logout</button>
         </div>

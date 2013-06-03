@@ -129,14 +129,27 @@
       <DependentUpon>settings.ts</DependentUpon>
     </Content>
     <Content Include="app\controllers\settings.ts" />
+    <TypeScriptCompile Include="app\models\user.ts" />
+    <Content Include="app\models\user.js">
+      <DependentUpon>user.ts</DependentUpon>
+    </Content>
+    <Content Include="app\models\user.min.js">
+      <DependentUpon>user.ts</DependentUpon>
+    </Content>
     <Content Include="app\partials\home.html" />
     <Content Include="app\partials\settings.html" />
-    <TypeScriptCompile Include="app\services\azureMobile.ts" />
+    <TypeScriptCompile Include="app\services\auth.ts" />
+    <Content Include="app\services\auth.js">
+      <DependentUpon>auth.ts</DependentUpon>
+    </Content>
+    <Content Include="app\services\auth.min.js">
+      <DependentUpon>auth.ts</DependentUpon>
+    </Content>
     <Content Include="app\services\azureMobile.js">
-      <DependentUpon>azureMobile.ts</DependentUpon>
+      <DependentUpon>auth.ts</DependentUpon>
     </Content>
     <Content Include="app\services\azureMobile.min.js">
-      <DependentUpon>azureMobile.ts</DependentUpon>
+      <DependentUpon>auth.ts</DependentUpon>
     </Content>
     <Content Include="app\_refs.ts" />
     <Content Include="Global.asax" />

@@ -2,16 +2,16 @@ var MediaManager;
 (function (MediaManager) {
     'use strict';
     var SettingsCtrl = (function () {
-        function SettingsCtrl($scope, $http, azureMobileService) {
+        function SettingsCtrl($scope, $http, authService) {
             this.$scope = $scope;
             this.$http = $http;
-            this.azureMobileService = azureMobileService;
+            this.authService = authService;
             $scope.message = "Settings";
             $scope.result = "";
             $scope.getSomething = function () {
                 $http.get(Globals.apiUrl + '/api/settings', {
                     headers: {
-                        'Authorization': 'Bearer ' + azureMobileService.getToken()
+                        'Authorization': 'Bearer ' + authService.getToken()
                     }
                 }).success(function (data) {
                     $scope.result = JSON.stringify(data);
@@ -23,7 +23,7 @@ var MediaManager;
         SettingsCtrl.$inject = [
             '$scope', 
             '$http', 
-            'azureMobileService'
+            'authService'
         ];
         return SettingsCtrl;
     })();

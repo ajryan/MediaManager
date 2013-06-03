@@ -6,15 +6,15 @@ module MediaManager {
     'use strict';
 
     export class SettingsCtrl {
-        static $inject = ['$scope', '$http', 'azureMobileService'];
+        static $inject = ['$scope', '$http', 'authService'];
 
-        constructor(private $scope: any, private $http: ng.IHttpService, private azureMobileService: AzureMobileService) { // TODO: interface ISettingsScope
+        constructor(private $scope: any, private $http: ng.IHttpService, private authService: AuthService) { // TODO: interface ISettingsScope
             $scope.message = "Settings";
             $scope.result = "";
 
             $scope.getSomething = () => {
                 $http.get(Globals.apiUrl + '/api/settings', {
-                    headers: { 'Authorization': 'Bearer ' + azureMobileService.getToken()}
+                    headers: { 'Authorization': 'Bearer ' + authService.getToken()}
                 }).success((data) => {
                     $scope.result = JSON.stringify(data);
                 }).error((data,status,h,c) => {

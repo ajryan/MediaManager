@@ -20,7 +20,8 @@ namespace MediaManager.Web
             
             var angularAppBundle = new Bundle("~/bundles/angular-app").Include(
                 "~/app/app.js",
-                "~/app/services/azureMobile.js",
+                "~/app/models/user.js",
+                "~/app/services/auth.js",
                 "~/app/controllers/navigation.js",
                 "~/app/controllers/home.js",
                 "~/app/controllers/login.js",
