@@ -5,28 +5,29 @@ var MediaManager;
         function LoginCtrl($scope, authService) {
             this.$scope = $scope;
             this.authService = authService;
-            var self = this;
-            self.updateLogin($scope, authService);
+            LoginCtrl.updateLogin($scope, authService);
             $scope.login = function () {
                 $scope.statusMessage = "Login in progress...";
                 authService.login().then(function (result) {
                     return $scope.$apply(function () {
-                        return self.updateLogin($scope, authService);
+                        return LoginCtrl.updateLogin($scope, authService);
                     });
                 }, function (error) {
-                    return alert(error);
+                    return $scope.$apply(function () {
+                        return $scope.statusMessage = error;
+                    });
                 });
             };
             $scope.logout = function () {
                 authService.logout();
-                self.updateLogin($scope, authService);
+                LoginCtrl.updateLogin($scope, authService);
             };
         }
         LoginCtrl.$inject = [
             '$scope', 
             'authService'
         ];
-        LoginCtrl.prototype.updateLogin = function ($scope, authService) {
+        LoginCtrl.updateLogin = function updateLogin($scope, authService) {
             $scope.statusMessage = "Checking login...";
             var loggedIn = authService.getIsLoggedIn();
             $scope.loggedIn = loggedIn;
@@ -39,7 +40,7 @@ var MediaManager;
             } else {
                 $scope.statusMessage = "Please log in.";
             }
-        };
+        }
         return LoginCtrl;
     })();
     MediaManager.LoginCtrl = LoginCtrl;    

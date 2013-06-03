@@ -14,25 +14,24 @@ module MediaManager {
         static $inject = ['$scope', 'authService'];
 
         constructor(private $scope: ILoginScope, private authService: AuthService) { // TODO: interface ILoginScope
-            var self = this;
 
-            self.updateLogin($scope, authService);
+            LoginCtrl.updateLogin($scope, authService);
 
             $scope.login = function() {
                 $scope.statusMessage = "Login in progress...";
                 authService.login().then(
-                    result => $scope.$apply(() => self.updateLogin($scope, authService)),
-                    error => alert(error)
+                    result => $scope.$apply(() => LoginCtrl.updateLogin($scope, authService)),
+                    error => $scope.$apply(() => $scope.statusMessage = error)
                 );
             };
 
             $scope.logout = function() {
                 authService.logout();
-                self.updateLogin($scope, authService);
+                LoginCtrl.updateLogin($scope, authService);
             };
         }
 
-        private updateLogin($scope: ILoginScope, authService: AuthService) {
+        private static updateLogin($scope: ILoginScope, authService: AuthService) {
             $scope.statusMessage = "Checking login...";
             var loggedIn = authService.getIsLoggedIn();
             $scope.loggedIn = loggedIn;
