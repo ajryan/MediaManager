@@ -13,10 +13,11 @@ namespace MediaManager.Web.Controllers
         {
             var requestMulti = await request.Content.ReadAsMultipartAsync();
 
+            
             for (int contentIndex = 0; contentIndex < requestMulti.Contents.Count; contentIndex++)
             {
                 var part = requestMulti.Contents[contentIndex];
-                Trace.TraceInformation("Part {0}: {1}", contentIndex, await part.ReadAsStringAsync());
+                Trace.TraceInformation("Part {0} - {1}: {2}", contentIndex, part.Headers.ContentDisposition.Name, await part.ReadAsStringAsync());
             }
 
             //string to = await requestMulti.Contents[2].ReadAsStringAsync();
