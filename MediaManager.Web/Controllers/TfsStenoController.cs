@@ -35,7 +35,8 @@ namespace MediaManager.Web.Controllers
                     case "TO":
                         int workItemId;
                         string trimmedTo = partText.Replace("\"", String.Empty);
-                        if (Int32.TryParse(trimmedTo.Substring(0, partText.IndexOf('@')), out workItemId))
+                        Trace.TraceInformation("Parsing ID from " + trimmedTo);
+                        if (Int32.TryParse(trimmedTo.Substring(0, trimmedTo.IndexOf('@')), out workItemId))
                             WorkItemId = workItemId;
                         break;
                     case "SUBJECT":
