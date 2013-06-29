@@ -16,7 +16,7 @@ namespace MediaManager.Web.Controllers
             {
                 get
                 {
-                    return String.Format("{0} UTC - {1}:\r\n\r\n{2}", DateTime.UtcNow, _subject, _body);
+                    return String.Format("<h2>{0} UTC - {1}</h2><div>{2}</div>", DateTime.UtcNow, _subject, _body);
                 }
             }
 
