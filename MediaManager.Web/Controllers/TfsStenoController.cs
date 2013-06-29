@@ -12,7 +12,16 @@ namespace MediaManager.Web.Controllers
         public class WorkItemEmail
         {
             public int WorkItemId { get; set; }
-            public string HistoryText { get; set; }
+            public string HistoryText
+            {
+                get
+                {
+                    return String.Format("{0} UTC - {1}:\r\n\r\n{2}", DateTime.UtcNow, _subject, _body);
+                }
+            }
+
+            private string _body;
+            private string _subject;
 
             public WorkItemEmail()
             {
@@ -28,12 +37,15 @@ namespace MediaManager.Web.Controllers
                         if (Int32.TryParse(partText.Substring(0, partText.IndexOf('@')), out workItemId))
                             WorkItemId = workItemId;
                         break;
+                    case "SUBJECT":
+                        _subject = partText;
+                        break;
                     case "TEXT":
-                        if (String.IsNullOrEmpty(HistoryText))
-                            HistoryText = partText;
+                        if (String.IsNullOrEmpty(_body))
+                            _body = partText;
                         break;
                     case "HTML":
-                        HistoryText = partText;
+                        _body = partText;
                         break;
                 }
             }
