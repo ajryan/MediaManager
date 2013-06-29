@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using System.Web.Http;
 using System.Web.Optimization;
 using BundleTransformer.Core.Transformers;
 
@@ -9,6 +10,21 @@ namespace MediaManager.Web
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            ConfigureWebApi();
+            ConfigureBundles();
+        }
+
+        private void ConfigureWebApi()
+        {
+            GlobalConfiguration.Configuration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+        }
+
+        private static void ConfigureBundles()
+        {
             var jsTransformer = new JsTransformer();
 
             var libsBundle = new Bundle("~/bundles/libs").Include(
@@ -17,7 +33,7 @@ namespace MediaManager.Web
                 "~/Scripts/angular.js");
             libsBundle.Transforms.Add(jsTransformer);
             BundleTable.Bundles.Add(libsBundle);
-            
+
             var angularAppBundle = new Bundle("~/bundles/angular-app").Include(
                 "~/app/app.js",
                 "~/app/models/user.js",
