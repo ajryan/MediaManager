@@ -71,8 +71,8 @@ namespace MediaManager.Web.Controllers
                 workItemEmail.ParsePart(partName, partText);
 
                 Trace.TraceInformation("Part {0} - {1}: {2}", contentIndex, partName, partText.Substring(0, Math.Min(partText.Length, 25)));
-                Trace.TraceInformation("WorkItemEmail: " + workItemEmail.ToString());
             }
+            Trace.TraceInformation("WorkItemEmail: " + workItemEmail.ToString());
 
             string responseContent = workItemEmail.WorkItemId == -1
                 ? "To address must be WorkItemId@tfssteno.aidanjryan.com"
