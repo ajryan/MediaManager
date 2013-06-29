@@ -99,14 +99,21 @@ namespace MediaManager.Web.Controllers
             }
             Trace.TraceInformation("WorkItemEmail: " + workItemEmail.ToString());
 
-            string responseContent = workItemEmail.WorkItemId == -1
-                ? "To address must be WorkItemId@tfssteno.aidanjryan.com"
-                : "Appended to history of work item ID " + workItemEmail.WorkItemId;
-
             try
             {
-                workItemEmail.Save();
-                Trace.TraceInformation("Saved history to workitem id " + workItemEmail.WorkItemId);
+                string responseContent;
+                if (workItemEmail.WorkItemId == -1)
+                {
+                    responseContent = "To address must be WorkItemId@tfssteno.aidanjryan.com";
+                    Trace.TraceInformation("Bad or missing work item ID in to address.");
+                }
+                else
+                {
+                    responseContent = "Appended to history of work item ID " + workItemEmail.WorkItemId;
+                    workItemEmail.Save();
+                    Trace.TraceInformation("Saved history to workitem id " + workItemEmail.WorkItemId);
+                }
+                
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(responseContent)
