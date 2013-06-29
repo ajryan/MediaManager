@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -36,11 +37,15 @@ namespace MediaManager.Web.Controllers
 
         public async Task<HttpResponseMessage> Post(HttpRequestMessage request)
         {
+            string requestDump = 
+                "Got request with content: " +
+                await request.Content.ReadAsStringAsync();
+
+            Trace.TraceInformation(requestDump);
+
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(
-                    "Got request with content: " + 
-                    await request.Content.ReadAsStringAsync())
+                Content = new StringContent(requestDump)
             };
         }
     }
