@@ -206,6 +206,7 @@
       <DependentUpon>auth.ts</DependentUpon>
     </Content>
     <Content Include="app\_refs.ts" />
+    <Content Include="bin\Microsoft.WITDataStore.dll" />
     <Content Include="Global.asax" />
     <Content Include="default.cshtml" />
     <TypeScriptCompile Include="app\app.ts" />
