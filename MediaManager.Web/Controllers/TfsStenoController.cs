@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace MediaManager.Web.Controllers
@@ -18,17 +20,27 @@ namespace MediaManager.Web.Controllers
         {
             return String.Format(
                 "to: {0}; subject: {1}, html: {2}, text: {3}",
-                to, subject, html, text);
+                String.Join(", ", to), subject, html, text);
         }
     }
 
     public class TfsStenoController : ApiController
     {
-        public HttpResponseMessage Post([FromBody] Email email)
+        //public HttpResponseMessage Post([FromBody] Email email)
+        //{
+        //    return new HttpResponseMessage(HttpStatusCode.OK)
+        //    {
+        //        Content = new StringContent(email.ToString())
+        //    };
+        //}
+
+        public async Task<HttpResponseMessage> Post(HttpRequestMessage request)
         {
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(email.ToString())
+                Content = new StringContent(
+                    "Got request with content: " + 
+                    await request.Content.ReadAsStringAsync())
             };
         }
     }
