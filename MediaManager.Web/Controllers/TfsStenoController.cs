@@ -7,11 +7,13 @@ namespace MediaManager.Web.Controllers
 {
     public class TfsStenoController : ApiController
     {
-        public HttpResponseMessage Post(HttpRequestMessage request)
+        public HttpResponseMessage Post(string to, string subject, string html, string text)
         {
-            return new HttpResponseMessage(HttpStatusCode.Accepted)
+            return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("Got request with content: " + request.Content.ToString())
+                Content = new StringContent(String.Format(
+                    "Got request with to: {0}; subject: {1}, html: {2}, text: {3}",
+                    to, subject, html, text))
             };
         }
     }
