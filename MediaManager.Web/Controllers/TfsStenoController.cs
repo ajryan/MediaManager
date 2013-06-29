@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Microsoft.TeamFoundation.Client;
+using Microsoft.TeamFoundation.WorkItemTracking.Client;
 
 namespace MediaManager.Web.Controllers
 {
@@ -52,6 +55,26 @@ namespace MediaManager.Web.Controllers
                 }
             }
 
+            public void Save()
+            {
+                string tfsUserName = ConfigurationManager.AppSettings["tfsUserName"];
+                string tfsPassword = ConfigurationManager.AppSettings["tfsPassword"];
+                string tfsUrl = ConfigurationManager.AppSettings["tfsUrl"];
+                string tfsProjectName = ConfigurationManager.AppSettings["tfsProject"];
+
+                var networkCred = new NetworkCredential(tfsUserName, tfsPassword);
+                var basicCred = new BasicAuthCredential(networkCred);
+                var tfsCred = new TfsClientCredentials(basicCred) {AllowInteractive = false};
+
+                var teamProjectColl = new TfsTeamProjectCollection(new Uri(tfsUrl), tfsCred);
+                teamProjectColl.Authenticate();
+
+                var workItemService = teamProjectColl.GetService<WorkItemStore>();
+                var workItem = workItemService.GetWorkItem(WorkItemId);
+                workItem.History = HistoryText;
+                workItem.Save();
+            }
+
             public override string ToString()
             {
                 return String.Format("ID: {0}; Text: {1}", WorkItemId, HistoryText);
@@ -80,10 +103,21 @@ namespace MediaManager.Web.Controllers
                 ? "To address must be WorkItemId@tfssteno.aidanjryan.com"
                 : "Appended to history of work item ID " + workItemEmail.WorkItemId;
 
-            return new HttpResponseMessage(HttpStatusCode.OK)
+            try
             {
-                Content = new StringContent(responseContent)
-            };
+                workItemEmail.Save();
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(responseContent)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Failed to save work item with exception: " + ex)
+                };
+            }
         }
     }
 }
