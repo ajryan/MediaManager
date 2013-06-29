@@ -9,41 +9,67 @@ namespace MediaManager.Web.Controllers
 {
     public class TfsStenoController : ApiController
     {
+        public class WorkItemEmail
+        {
+            public int WorkItemId { get; set; }
+            public string HistoryText { get; set; }
+
+            public WorkItemEmail()
+            {
+                WorkItemId = -1;
+            }
+
+            public void ParsePart(string partName, string partText)
+            {
+                switch (partName.Replace("\"", String.Empty).ToUpper())
+                {
+                    case "TO":
+                        int workItemId;
+                        if (Int32.TryParse(partText.Substring(partText.IndexOf('@') + 1), out workItemId))
+                            WorkItemId = workItemId;
+                        break;
+                    case "TEXT":
+                        if (String.IsNullOrEmpty(HistoryText))
+                            HistoryText = partText;
+                        break;
+                    case "HTML":
+                        HistoryText = partText;
+                        break;
+                }
+            }
+
+            public override string ToString()
+            {
+                return String.Format("ID: {0}; Text: {1}", WorkItemId, HistoryText);
+            }
+        }
+
         public async Task<HttpResponseMessage> Post(HttpRequestMessage request)
         {
-            var requestMulti = await request.Content.ReadAsMultipartAsync();
+            var workItemEmail = new WorkItemEmail();
 
-            
+            var requestMulti = await request.Content.ReadAsMultipartAsync();
             for (int contentIndex = 0; contentIndex < requestMulti.Contents.Count; contentIndex++)
             {
                 var part = requestMulti.Contents[contentIndex];
-                Trace.TraceInformation("Part {0} - {1}: {2}", contentIndex, part.Headers.ContentDisposition.Name, await part.ReadAsStringAsync());
+                
+                string partName = part.Headers.ContentDisposition.Name;
+                string partText = await part.ReadAsStringAsync();
+                
+                workItemEmail.ParsePart(partName, partText);
+
+                Trace.TraceInformation("Part {0} - {1}: {2}", contentIndex, partName, partText);
+                Trace.TraceInformation("WorkItemEmail: " + workItemEmail.ToString());
             }
 
-            //string to = await requestMulti.Contents[2].ReadAsStringAsync();
-            //string subject = await requestMulti.Contents[8].ReadAsStringAsync();
-            //string body = await requestMulti.Contents[3].ReadAsStringAsync();
+            string responseContent = workItemEmail.WorkItemId == -1
+                ? "To address must be WorkItemId@tfssteno.aidanjryan.com"
+                : "Appended to history of work item ID " + workItemEmail.WorkItemId;
 
-            //Trace.TraceInformation(String.Format("Received message. To: {0}; Subject: {1}, Body: {2}", to, subject, body));
-
-            //int workItemId;
-            //if (!Int32.TryParse(to.Substring(to.IndexOf('@') + 1), out workItemId))
-            //{
-            //    string failMessage = "Could not parse workitem ID from " + to;
-            //    Trace.TraceInformation(failMessage);
-            //    return new HttpResponseMessage(HttpStatusCode.OK)
-            //    {
-            //        Content = new StringContent(failMessage)
-            //    };
-            //}
-
-            //Trace.TraceInformation("WorkItem ID: " + workItemId);
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                //Content = new StringContent("Appended to history of work item " + workItemId)
-                Content = new StringContent("temp")
+                Content = new StringContent(responseContent)
             };
-
         }
     }
 }
