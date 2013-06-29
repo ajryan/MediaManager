@@ -106,6 +106,7 @@ namespace MediaManager.Web.Controllers
             try
             {
                 workItemEmail.Save();
+                Trace.TraceInformation("Saved history to workitem id " + workItemEmail.WorkItemId);
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     Content = new StringContent(responseContent)
@@ -113,9 +114,11 @@ namespace MediaManager.Web.Controllers
             }
             catch (Exception ex)
             {
+                string errorMessage = "Failed to save work item with exception: " + ex;
+                Trace.TraceInformation(errorMessage);
                 return new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent("Failed to save work item with exception: " + ex)
+                    Content = new StringContent(errorMessage)
                 };
             }
         }
