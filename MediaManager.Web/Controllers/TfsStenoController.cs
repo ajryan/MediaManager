@@ -25,7 +25,7 @@ namespace MediaManager.Web.Controllers
                 {
                     case "TO":
                         int workItemId;
-                        if (Int32.TryParse(partText.Substring(partText.IndexOf('@') + 1), out workItemId))
+                        if (Int32.TryParse(partText.Substring(0, partText.IndexOf('@')), out workItemId))
                             WorkItemId = workItemId;
                         break;
                     case "TEXT":
