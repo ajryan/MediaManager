@@ -11,22 +11,20 @@ namespace MediaManager.Web.Controllers
     {
         public async Task<HttpResponseMessage> Post(HttpRequestMessage request)
         {
-            //string requestDump = "Request: " + request.ToString();
-            //Trace.TraceInformation(requestDump);
-
             var requestMulti = await request.Content.ReadAsMultipartAsync();
 
-            string messageDump = String.Empty;
-            for (int index = 0; index < requestMulti.Contents.Count; index++)
-            {
-                HttpContent part = requestMulti.Contents[index];
-                messageDump += "Part " + index + ": " + await part.ReadAsStringAsync();
-            }
-            Trace.TraceInformation(messageDump);
+            string to = await requestMulti.Contents[2].ReadAsStringAsync();
+            string subject = await requestMulti.Contents[8].ReadAsStringAsync();
+            string body = await requestMulti.Contents[3].ReadAsStringAsync();
+
+            Trace.TraceInformation(String.Format("Received message. To: {0}; Subject: {1}, Body: {2}", to, subject, body));
+
+            int workItemId = Int32.Parse(to.Substring(to.IndexOf('@') + 1));
+            Trace.TraceInformation("WorkItem ID: " + workItemId);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent("Message dump: " + messageDump)
+                Content = new StringContent("Appended to history of work item " + workItemId)
             };
         }
     }
