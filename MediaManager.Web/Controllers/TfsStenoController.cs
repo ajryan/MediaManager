@@ -19,13 +19,23 @@ namespace MediaManager.Web.Controllers
 
             Trace.TraceInformation(String.Format("Received message. To: {0}; Subject: {1}, Body: {2}", to, subject, body));
 
-            int workItemId = Int32.Parse(to.Substring(to.IndexOf('@') + 1));
-            Trace.TraceInformation("WorkItem ID: " + workItemId);
+            int workItemId;
+            if (!Int32.TryParse(to.Substring(to.IndexOf('@') + 1), out workItemId))
+            {
+                string failMessage = "Could not parse workitem ID from " + to;
+                Trace.TraceInformation(failMessage);
+                return new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent(failMessage)
+                };
+            }
 
+            Trace.TraceInformation("WorkItem ID: " + workItemId);
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent("Appended to history of work item " + workItemId)
             };
+            
         }
     }
 }
